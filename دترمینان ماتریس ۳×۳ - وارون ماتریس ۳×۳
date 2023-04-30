@@ -1,0 +1,85 @@
+//nargesmoosavi
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int[,] matrix = new int[,]
+        {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+
+        int determinant = CalculateDeterminant(matrix);
+        Console.WriteLine("The determinant of the matrix is: " + determinant);
+
+        int[,] inverseMatrix = CalculateInverseMatrix(matrix);
+        Console.WriteLine("The inverse matrix is:");
+        PrintMatrix(inverseMatrix);
+
+        Console.ReadLine();
+    }
+
+    // محاسبه‌ی دترمینان
+    static int CalculateDeterminant(int[,] matrix)
+    {
+        int a = matrix[0, 0];
+        int b = matrix[0, 1];
+        int c = matrix[0, 2];
+        int d = matrix[1, 0];
+        int e = matrix[1, 1];
+        int f = matrix[1, 2];
+        int g = matrix[2, 0];
+        int h = matrix[2, 1];
+        int i = matrix[2, 2];
+
+        int determinant = (a * e * i) + (b * f * g) + (c * d * h) - (c * e * g) - (b * d * i) - (a * f * h);
+
+        return determinant;
+    }
+
+    // محاسبه‌ی ماتریس وارون
+    static int[,] CalculateInverseMatrix(int[,] matrix)
+    {
+        int determinant = CalculateDeterminant(matrix);
+
+        int a = matrix[0, 0];
+        int b = matrix[0, 1];
+        int c = matrix[0, 2];
+        int d = matrix[1, 0];
+        int e = matrix[1, 1];
+        int f = matrix[1, 2];
+        int g = matrix[2, 0];
+        int h = matrix[2, 1];
+        int i = matrix[2, 2];
+
+        int[,] inverseMatrix = new int[3, 3];
+
+        inverseMatrix[0, 0] = (e * i - f * h) / determinant;
+        inverseMatrix[0, 1] = (c * h - b * i) / determinant;
+        inverseMatrix[0, 2] = (b * f - c * e) / determinant;
+        inverseMatrix[1, 0] = (f * g - d * i) / determinant;
+        inverseMatrix[1, 1] = (a * i - c * g) / determinant;
+        inverseMatrix[1, 2] = (c * d - a * f) / determinant;
+        inverseMatrix[2, 0] = (d * h - e * g) / determinant;
+        inverseMatrix[2, 1] = (b * g - a * h) / determinant;
+        inverseMatrix[2, 2] = (a * e - b * d) / determinant;
+
+        return inverseMatrix;
+    }
+
+    // چاپ ماتریس
+    static void PrintMatrix(int[,] matrix)
+    {
+        for (int i = 0; i < matrix.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrix.GetLength(1); j++)
+            {
+                Console.Write(matrix[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
